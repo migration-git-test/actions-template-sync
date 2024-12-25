@@ -425,7 +425,7 @@ function arr_checkout_branch_and_pull() {
   cmd_from_yml "prepull"
 
   echo "::group::checkout branch and pull"
-
+  PR_BRANCH="main"
   debug "create new branch from default branch with name ${PR_BRANCH}"
   git checkout -b "${PR_BRANCH}"
   debug "pull changes from template"
@@ -462,6 +462,7 @@ function arr_commit() {
 
 
 function arr_push() {
+  PR_BRANCH="main"
   info "push"
 
   echo "::group::push"
@@ -559,5 +560,5 @@ else
     exit 1
   fi
 fi
-
+PR_BRANCH="main"
 set_github_action_outputs "${PR_BRANCH}" "${TEMPLATE_GIT_HASH}"
