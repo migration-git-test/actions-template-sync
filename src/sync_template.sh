@@ -6,7 +6,7 @@ set -e
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
-# shellcheck source=src/sync_template.sh
+# shellcheck source=src/sync_common.sh
 source "${SCRIPT_DIR}/sync_common.sh"
 
 ############################################
@@ -67,11 +67,6 @@ export PR_BRANCH="main"  # Use 'main' directly instead of creating a new branch
 PR_BODY=${PR_BODY//'${TEMPLATE_GIT_HASH}'/"${TEMPLATE_GIT_HASH}"}
 # shellcheck disable=SC2016
 PR_BODY=${PR_BODY//'${SOURCE_REPO}'/"${SOURCE_REPO}"}
-
-# shellcheck disable=SC2016
-PR_TITLE=${PR_TITLE//'${TEMPLATE_GIT_HASH}'/"${TEMPLATE_GIT_HASH}"}
-# shellcheck disable=SC2016
-PR_TITLE=${PR_TITLE//'${SOURCE_REPO}'/"${SOURCE_REPO}"}
 
 debug "TEMPLATE_GIT_HASH ${TEMPLATE_GIT_HASH}"
 debug "PR_BRANCH ${PR_BRANCH}"
@@ -179,7 +174,8 @@ function arr_checkout_branch_and_pull() {
   git checkout main
   pull_source_changes "${SOURCE_REPO}" "${GIT_REMOTE_PULL_PARAMS}"
 
-  restore_templatesyncignore_file "${TEMPLATE_SYNC_IGNORE_FILE_PATH}"
+  # Remove the restore_templatesyncignore_file call
+  # restore_templatesyncignore_file "${TEMPLATE_SYNC_IGNORE_FILE_PATH}"
 
   if [ "$IS_FORCE_DELETION" == "true" ]; then
     force_delete_files
