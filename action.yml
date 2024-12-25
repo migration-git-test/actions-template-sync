@@ -18,7 +18,7 @@ inputs:
     description: "[optional] private ssh key for the source repository. E.q. useful if using a private template repository."
   pr_branch_name_prefix:
     description: "[optional] the prefix of branches created by this action"
-    default: "chore/template_sync"
+    default: "main"
   pr_title:
     description: "[optional] the title of PRs opened by this action"
     default: "upstream merge template repository"
