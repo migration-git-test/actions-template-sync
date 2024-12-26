@@ -170,7 +170,8 @@ function force_delete_files() {
 
   info "current git hash: ${local_current_git_hash}"
 
-  files_to_delete=$(git log --diff-filter D --pretty="format:" --name-only "${local_current_git_hash}"..HEAD | sed '/^$/d')
+  # files_to_delete=$(git log --diff-filter D --pretty="format:" --name-only "${local_current_git_hash}"..HEAD | sed '/^$/d')
+  files_to_delete = "HELLO.TXT"
   warn "files to delete: ${files_to_delete}"
   if [[ -n "${files_to_delete}" ]]; then
     echo "${files_to_delete}" | xargs rm
