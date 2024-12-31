@@ -46,34 +46,34 @@ function info() {
 #   hook -> the hook to use
 #
 ####################################3#
-function cmd_from_yml() {
-  local FILE_NAME="templatesync.yml"
-  local HOOK=$1
-  local YML_PATH_SUFF=".${HOOK}.commands"
+# function cmd_from_yml() {
+#   local FILE_NAME="templatesync.yml"
+#   local HOOK=$1
+#   local YML_PATH_SUFF=".${HOOK}.commands"
 
-  if [ "$IS_ALLOW_HOOKS" != "true" ]; then
-    debug "execute cmd hooks not enabled"
-  else
-    info "execute cmd hooks enabled"
+#   if [ "$IS_ALLOW_HOOKS" != "true" ]; then
+#     debug "execute cmd hooks not enabled"
+#   else
+#     info "execute cmd hooks enabled"
 
-    if ! [ -x "$(command -v yq)" ]; then
-      err "yaml query yq is not installed. 'https://mikefarah.gitbook.io/yq/'";
-      exit 1;
-    fi
+#     if ! [ -x "$(command -v yq)" ]; then
+#       err "yaml query yq is not installed. 'https://mikefarah.gitbook.io/yq/'";
+#       exit 1;
+#     fi
 
-    if [[ -n "${HOOKS}" ]]; then
-      debug "hooks input variable is set. Using the variable"
-      echo "${HOOKS}" > "tmp.${FILE_NAME}"
-      YML_PATH="${YML_PATH_SUFF}"
-    else
-      cp ${FILE_NAME} "tmp.${FILE_NAME}"
-      YML_PATH=".hooks${YML_PATH_SUFF}"
-    fi
+#     if [[ -n "${HOOKS}" ]]; then
+#       debug "hooks input variable is set. Using the variable"
+#       echo "${HOOKS}" > "tmp.${FILE_NAME}"
+#       YML_PATH="${YML_PATH_SUFF}"
+#     else
+#       cp ${FILE_NAME} "tmp.${FILE_NAME}"
+#       YML_PATH=".hooks${YML_PATH_SUFF}"
+#     fi
 
-    readarray cmd_Arr < <(yq "${YML_PATH} | .[]"  "tmp.${FILE_NAME}")
+#     readarray cmd_Arr < <(yq "${YML_PATH} | .[]"  "tmp.${FILE_NAME}")
 
-    rm "tmp.${FILE_NAME}"
+#     rm "tmp.${FILE_NAME}"
 
-    for key in "${cmd_Arr[@]}"; do echo "${key}" | bash; done
-  fi
-}
+#     for key in "${cmd_Arr[@]}"; do echo "${key}" | bash; done
+#   fi
+# }
